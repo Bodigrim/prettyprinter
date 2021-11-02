@@ -60,3 +60,6 @@
     name: Avoid return
     lhs: return
     rhs: pure
+
+# hlint fails to account for ViewPatterns usage inside PatternSynonyms
+- ignore: {name: Unused LANGUAGE pragma, within: Prettyprinter.Internal}

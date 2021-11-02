@@ -20,4 +20,8 @@
 
 #define FAIL_IN_MONAD                   !(MIN_VERSION_base(4,13,0))
 
+#define BIDI_PATTERN_SYNONYMS           MIN_VERSION_base(4,8,0)
+#define PATTERN_SYNONYM_SIGNATURES      MIN_VERSION_base(4,9,0)
+#define COMPLETE_PRAGMA                 MIN_VERSION_base(4,10,0)
+
 #endif

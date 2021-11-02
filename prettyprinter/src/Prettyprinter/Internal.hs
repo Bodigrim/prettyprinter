@@ -10,6 +10,14 @@
 
 #include "version-compatibility-macros.h"
 
+#if BIDI_PATTERN_SYNONYMS
+{-# LANGUAGE PatternSynonyms     #-}
+{-# LANGUAGE ViewPatterns        #-}
+#if PATTERN_SYNONYM_SIGNATURES
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures #-}
+#endif
+#endif
+
 -- | __Warning: internal module!__ This means that the API may change
 -- arbitrarily between versions without notice. Depending on this module may
 -- lead to unexpected breakages, so proceed with caution!
@@ -68,6 +76,9 @@ module Prettyprinter.Internal (
 
     -- * Layout
     SimpleDocStream(..),
+#if BIDI_PATTERN_SYNONYMS
+    pattern SString,
+#endif
     PageWidth(..), defaultPageWidth,
     LayoutOptions(..), defaultLayoutOptions,
     layoutPretty, layoutCompact, layoutSmart,
@@ -1595,6 +1606,23 @@ data SimpleDocStream ann =
     -- | Remove a previously pushed annotation.
     | SAnnPop (SimpleDocStream ann)
     deriving (Eq, Ord, Show, Generic, Typeable)
+
+#if BIDI_PATTERN_SYNONYMS
+
+#ifdef MIN_VERSION_text
+-- | 'length' is /O(n)/, so we cache it in the 'Int' field.
+pattern SString a b c <- SText a (T.unpack -> b) c where
+  SString a b c = SText a (T.pack b) c
+#else
+-- | 'length' is /O(n)/, so we cache it in the 'Int' field.
+pattern SString a b c = SText a b c
+#endif
+
+#if COMPLETE_PRAGMA
+{-# COMPLETE SFail, SEmpty, SChar, SString, SLine, SAnnPush, SAnnPop #-}
+#endif
+
+#endif
 
 -- | Remove all trailing space characters.
 --
