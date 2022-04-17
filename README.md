@@ -5,7 +5,18 @@
 A modern Wadler/Leijen Prettyprinter
 ====================================
 
-[![](https://img.shields.io/hackage/v/prettyprinter.svg?style=flat-square&label=Hackage&colorB=0a7bbb)](https://hackage.haskell.org/package/prettyprinter)
+This is an experimental fork of `prettyprinter` to demonstrate performance
+benefits of [`text-builder-linear`](https://github.com/Bodigrim/linear-builder):
+
+|Name                                   |Before, ms |After, ms |Ratio   |
+|---------------------------------------|----------:|---------:|:------:|
+|80 characters 50% ribbon.layoutPretty  |453|243|0.538|
+|80 characters 50% ribbon.layoutSmart   |448|245|0.548|
+|80 characters 50% ribbon.layoutCompact |284|222|0.785|
+|large page width.layoutPretty          |451|246|0.546|
+|large page width.layoutSmart           |452|238|0.527|
+|large page width.layoutCompact         |290|234|0.807|
+|Geometric mean                         |   |   |0.614|
 
 tl;dr
 -----
